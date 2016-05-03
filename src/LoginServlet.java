@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 /**
  * Created by yoobright on 2016/5/3.
  */
-@WebServlet(name = "LoginServlet", value = "/login.view")
+@WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
