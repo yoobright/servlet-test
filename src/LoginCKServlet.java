@@ -1,3 +1,6 @@
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -9,15 +12,16 @@ import java.util.Objects;
  */
 @WebServlet(name = "LoginCKServlet", value = "/loginCK")
 public class LoginCKServlet extends HttpServlet {
+
+  private static final Logger LOGGER = LogManager.getLogger(LoginCKServlet.class);
+
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-  }
-
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
       //接收用户名和密码
       String username = request.getParameter("username");
       String password = request.getParameter("password");
+      LOGGER.info("username: " + username);
+      LOGGER.info("password: " + password);
 
       if (Objects.equals(username, "admin") && Objects.equals(password, "admin"))   //如果用户合法
       {
@@ -47,5 +51,9 @@ public class LoginCKServlet extends HttpServlet {
     } catch (Exception ex) {
       ex.printStackTrace();
     }
+  }
+
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
   }
 }
