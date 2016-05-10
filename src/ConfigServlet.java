@@ -1,3 +1,6 @@
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +23,7 @@ import java.io.IOException;
 public class ConfigServlet extends HttpServlet {
   private String SUCCESS_VIEW;
   private String ERROR_VIEW;
+  private static final Logger LOGGER = LogManager.getLogger(ConfigServlet.class);
 
   @Override
   public void init() throws ServletException {
@@ -32,10 +36,11 @@ public class ConfigServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     String name = request.getParameter("name");
     String passwd = request.getParameter("passwd");
-    System.out.println(name);
-    System.out.println(passwd);
-    System.out.println(SUCCESS_VIEW);
-    System.out.println(ERROR_VIEW);
+    LOGGER.info("name: " + name);
+    LOGGER.info("passwd: " + passwd);
+    LOGGER.info("SUCCESS_VIEW: " + SUCCESS_VIEW);
+    LOGGER.info("ERROR_VIEW: " + ERROR_VIEW);
+
     if ("admin".equals(name) && "123456".equals(passwd)) {
       request.getRequestDispatcher("success.html").forward(request, response);
     } else {
