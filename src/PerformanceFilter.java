@@ -5,7 +5,9 @@ import java.io.IOException;
 /**
  * Created by yoobright on 2016/5/11.
  */
-@WebFilter(filterName = "PerformanceFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "PerformanceFilter", urlPatterns = {"/*"},
+    asyncSupported = true
+)
 public class PerformanceFilter implements Filter {
   private FilterConfig config;
 
