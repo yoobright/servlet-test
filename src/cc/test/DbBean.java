@@ -1,20 +1,23 @@
 package cc.test;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Created by yoobright on 2016/5/14.
- */
+
 public class DbBean implements Serializable {
-  private String jdbcUrl="jdbc:sqlite:test.sqlite";
+  private DataSource dataSource;
 
   public DbBean() {
     try {
-      Class.forName("org.sqlite.JDBC");
-    } catch (ClassNotFoundException e) {
+      Context initContext = new InitialContext();
+      Context envContext = (Context) initContext.lookup("java:/comp/env");
+      dataSource = (DataSource) envContext.lookup("jdbc/demo");
+    } catch (NamingException e) {
       throw new RuntimeException(e);
     }
   }
@@ -24,7 +27,7 @@ public class DbBean implements Serializable {
     Connection conn = null;
     SQLException ex = null;
     try{
-      conn = DriverManager.getConnection(jdbcUrl);
+      conn = dataSource.getConnection();
       if (!conn.isClosed()){
         ok = true;
       }
@@ -47,11 +50,11 @@ public class DbBean implements Serializable {
     return ok;
   }
 
-  public String getJdbcUrl() {
-    return jdbcUrl;
+  public DataSource getDataSource() {
+    return dataSource;
   }
 
-  public void setJdbcUrl(String jdbcUrl) {
-    this.jdbcUrl = jdbcUrl;
+  public void setDataSource(DataSource dataSource) {
+    this.dataSource = dataSource;
   }
 }
